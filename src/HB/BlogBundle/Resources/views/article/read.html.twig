@@ -2,9 +2,12 @@
 
 {% block body %}
     <h1>Read</h1>
-route /article/id={{ article.id }}
-
-<b>titre</b> : {{ article.titre}}<br/>
-    <b>contenu</b> : {{ article.contenu}}<br/>
+    {% if (article==null) %}
+        Cet article n'existe pas
+    {% else %}
+        <b>id</b> : {{ article.id }}<br/>
+        <b>titre</b> : {{ article.titre}}<br/>
+        <b>contenu</b> :<p>{{ article.contenu|nl2br}}</p><br/>
+    {% endif %}
 {% endblock %}
 

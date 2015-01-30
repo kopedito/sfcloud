@@ -2,6 +2,13 @@
 
 {% block body %}
     <h1>Index</h1>
-route /article/
+    <ul>
+    {% for article in articles %}
+        <li>#{{ article.id }} : </b>{{article.titre}}</b></li>
+    {% endfor %}
+    </ul>
+    <a href="add">ajouter</a><br/>
+    TODO: ajouter<br/>
+    TODO: paginer (prev/next)<br/>
 {% endblock %}
 

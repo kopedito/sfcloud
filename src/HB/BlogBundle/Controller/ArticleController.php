@@ -12,6 +12,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class ArticleController extends Controller
 {     
+   
+    private function getArticleRepository()
+    {
+        return $this->getDoctrine()->getRepository("HBBlogBundle:Article");
+    }
+
     /**
      * Ajoute un article
      * @Route("/add")
@@ -30,7 +36,8 @@ class ArticleController extends Controller
      */
     public function indexAction()
     {
-         return array();
+        $articles = $this->getArticleRepository()->findAll();
+         return array('articles'=> $articles);
     }
 
     /**
@@ -40,17 +47,9 @@ class ArticleController extends Controller
      */
     public function readAction($id)
     {
-        $repository = $this->getDoctrine()->getRepository("HBBlogBundle:Article");
-        $article = $repository->find($id);
+        $article = $this->getArticleRepository()->find($id);
         
         return array ('article' => $article);
-        /*
-        return array('id' => $id,
-                    'titre' => $article->getTitre(),
-                    'contenu' => $article->getContenu(),
-                    'datecre' => $article->getDateCre());
-         */ 
-         
     }
 
     /**
