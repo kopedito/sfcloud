@@ -97,27 +97,4 @@ class Article
     {
         return $this->contenu;
     }
-
-    /**
-     * Set dateCre
-     *
-     * @param \DateTime $dateCre
-     * @return Article
-     */
-    public function setDateCre($dateCre)
-    {
-        $this->dateCre = $dateCre;
-
-        return $this;
-    }
-
-    /**
-     * Get dateCre
-     *
-     * @return \DateTime 
-     */
-    public function getDateCre()
-    {
-        return $this->dateCre;
-    }
 }
