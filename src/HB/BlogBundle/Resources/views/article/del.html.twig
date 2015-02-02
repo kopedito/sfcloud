@@ -2,7 +2,11 @@
 
 {% block body %}
     <h1>Del</h1>
-route /article/{{id}}/del
+    {% if ok==false %}
+        DEL NOK: l'article {{id}} n'existe pas
+    {% else %}
+        DEL OK: l'article {{id}} a été supprimé
+    {% endif %}
 
     <hr/><a href="/article/">HOME</a><br/>
 

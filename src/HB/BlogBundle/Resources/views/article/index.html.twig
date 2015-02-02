@@ -6,12 +6,15 @@
     <h1>Index</h1>
     <ul>
     {% for article in articles %}
-        <li>#{{loop.index}} : </b><a href="{{article.id}}">{{article.titre}}</a> (id:{{ article.id }})</b></li>
+        <li>#{{loop.index}} : </b>
+            <!-- <a href="{{article.id}}">{{article.titre}}</a> (id:{{ article.id }})</b></li> -->
+            <a href="{{ path('hb_blog_article_read' , {'id':article.id})}}">{{article.titre}}</a> (id:{{ article.id }})</b></li>
     {% else %}
         Pas d'élément à afficher
     {% endfor %}
     </ul>
-    <a href="add">ajouter</a><br/>
+    <a href="{{path('hb_blog_article_add')}}">ajouter</a><br/>
+    <!-- <a href="add">ajouter</a><br/> -->
     TODO: ajouter<br/>
     TODO: paginer (prev/next)<br/>
 {% endblock %}

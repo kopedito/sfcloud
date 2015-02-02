@@ -2,9 +2,10 @@
 
 {% block body %}
     <h1>Mod</h1>
-route /article/id={{ id }}
 
-    <hr/><a href="/article/">HOME</a><br/>
+    {{ form(form_article) }}
+
+    <hr/><a href="{{path('hb_blog_article_index')}}">HOME</a><br/>
 
 {% endblock %}
 

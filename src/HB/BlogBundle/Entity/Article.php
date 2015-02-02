@@ -40,11 +40,11 @@ class Article
      * 
      * @ORM\Column(name="datecre", type="datetime")
      */
-    private $dateCre;
+    private $datecre;
     
     public function __construct()
     {
-        $this->dateCre = date("Y-m-d H:i:s");
+        $this->datecre = new \DateTime();//date("Y-m-d H:i:s");
     }
     
     /**
@@ -104,25 +104,25 @@ class Article
     }
 
     /**
-     * Set dateCre
+     * Set datecre
      *
      * @param \DateTime $dateCre
      * @return Article
      */
-    public function setDateCre($dateCre)
+    public function setDatecre($dateCre)
     {
-        $this->dateCre = $dateCre;
+        $this->datecre = $dateCre;
 
         return $this;
     }
 
     /**
-     * Get dateCre
+     * Get datecre
      *
      * @return \DateTime 
      */
-    public function getDateCre()
+    public function getDatecre()
     {
-        return $this->dateCre;
+        return $this->datecre;
     }
 }
