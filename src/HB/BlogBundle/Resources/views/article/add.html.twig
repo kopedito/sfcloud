@@ -1,7 +1,12 @@
 {% extends 'HBBlogBundle:Base:base.html.twig' %}
 
+{% block title %}{{ parent() }} - Add{%endblock%}
+
 {% block body %}
     <h1>Add</h1>
 route /article/add
+
+    <hr/><a href="/article/">HOME</a><br/>
+
 {% endblock %}
 

@@ -1,5 +1,7 @@
 {% extends 'HBBlogBundle:Base:base.html.twig' %}
 
+{% block title %}{{ parent() }} - Read{%endblock%}
+
 {% block body %}
     <h1>Read</h1>
     {% if (article==null) %}
@@ -8,6 +10,16 @@
         <b>id</b> : {{ article.id }}<br/>
         <b>titre</b> : {{ article.titre}}<br/>
         <b>contenu</b> :<p>{{ article.contenu|nl2br}}</p><br/>
+        <b>datecre</b> :{{ article.datecre|date('d/m/Y H:i:s')}}<br/>
+        <br/>
+
+        <b>
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}/mod">modifier</a>&nbsp;
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}/del">supprimer</a><br/>
+        </b>
     {% endif %}
+    <hr/><a href="/article/">HOME</a><br/>
+    <br/>
+    TODO: author<br/>
 {% endblock %}
 

@@ -2,6 +2,7 @@
 
 namespace HB\BlogBundle\Controller;
 
+use HB\BlogBundle\Entity\Article;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -11,8 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  * @Route("/article")
  */
 class ArticleController extends Controller
-{     
-   
+{
+       
     private function getArticleRepository()
     {
         return $this->getDoctrine()->getRepository("HBBlogBundle:Article");
@@ -25,6 +26,8 @@ class ArticleController extends Controller
      */
     public function addAction()
     {
+        $article = new Article();
+        //$this->getDoctrine()->
         return array();
     }
  
@@ -37,7 +40,7 @@ class ArticleController extends Controller
     public function indexAction()
     {
         $articles = $this->getArticleRepository()->findAll();
-         return array('articles'=> $articles);
+        return array('articles'=> $articles);
     }
 
     /**

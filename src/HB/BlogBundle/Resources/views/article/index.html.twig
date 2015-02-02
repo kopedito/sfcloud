@@ -1,10 +1,14 @@
 {% extends 'HBBlogBundle:Base:base.html.twig' %}
 
+{% block title %}{{ parent() }} - Index{%endblock%}
+
 {% block body %}
     <h1>Index</h1>
     <ul>
     {% for article in articles %}
-        <li>#{{ article.id }} : </b>{{article.titre}}</b></li>
+        <li>#{{loop.index}} : </b><a href="{{article.id}}">{{article.titre}}</a> (id:{{ article.id }})</b></li>
+    {% else %}
+        Pas d'élément à afficher
     {% endfor %}
     </ul>
     <a href="add">ajouter</a><br/>

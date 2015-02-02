@@ -41,7 +41,12 @@ class Article
      * @ORM\Column(name="datecre", type="datetime")
      */
     private $dateCre;
-                        
+    
+    public function __construct()
+    {
+        $this->dateCre = date("Y-m-d H:i:s");
+    }
+    
     /**
      * Get id
      *
