@@ -5,8 +5,11 @@
 {% block body %}
     <h1>Add</h1>
 
-    {{ form(form_article) }}
-
+    {% if form_article is defined %}
+        {{ form(form_article) }}
+    {%else%}
+       erreur inconnue!!!
+    {%endif%}
     <hr/><a href="{{path('hb_blog_article_index')}}">HOME</a><br/>
 
 {% endblock %}

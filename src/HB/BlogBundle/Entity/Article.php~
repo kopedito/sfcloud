@@ -40,8 +40,24 @@ class Article
      * 
      * @ORM\Column(name="datecre", type="datetime")
      */
-    private $dateCre;
-                        
+    private $datecre;
+    
+    /**
+     * @var \DateTime
+     * 
+     * @ORM\Column(name="datemod", type="datetime")
+     */
+    private $datemod;  
+    //=> php app/console doctrine:generate:entities HBBlogBundle:Article
+    //=> php app/console doctrine:schema:update --dump-sql
+    //=> php app/console doctrine:schema:update --force
+    
+    public function __construct()
+    {
+        $this->datecre = new \DateTime();//date("Y-m-d H:i:s");
+        $this->datemod = new \DateTime();//date("Y-m-d H:i:s");
+    }
+    
     /**
      * Get id
      *
@@ -96,5 +112,28 @@ class Article
     public function getContenu()
     {
         return $this->contenu;
+    }
+
+    /**
+     * Set datecre
+     *
+     * @param \DateTime $dateCre
+     * @return Article
+     */
+    public function setDatecre($dateCre)
+    {
+        $this->datecre = $dateCre;
+
+        return $this;
+    }
+
+    /**
+     * Get datecre
+     *
+     * @return \DateTime 
+     */
+    public function getDatecre()
+    {
+        return $this->datecre;
     }
 }

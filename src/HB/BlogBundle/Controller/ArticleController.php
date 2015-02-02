@@ -20,16 +20,20 @@ class ArticleController extends Controller
         return $this->getDoctrine()->getRepository("HBBlogBundle:Article");
     }
 
-        private function editArticle($id=-1)
+    private function editArticle($article) 
+    //!!! editArticle(Article $article) n'accepte pas null en param, meme si find() peut retourner null
     {
-        if ($id == -1) //add
-        {
-            $article = new Article();
-        }
-        else //mod
-        {
-            $article = $this->getArticleRepository()->find($id);
-        }
+          if ($article == null) //mod d'un article qui n'existe pas
+            {
+                //erreur : rediriger vers une page d'erreur avec un msg i.e. err.html.twig
+                //return $this->redirect($this->generateUrl('hb_blog_article_index'));
+                //ou tester l'existence du formulaire dans le twig...
+              return array();
+            }
+            else if ($article->getId()>0)   //mod d'un article connu
+            {
+                $article->setDatemod(new \DateTime());
+            }
         
         $form = $this->createForm(new ArticleType, $article);//$formBuilder->getForm();
 
@@ -59,7 +63,7 @@ class ArticleController extends Controller
 
         // On passe la méthode createView() du formulaire à la vue afin qu'elle puisse afficher 
         // le formulaire toute seule, on a d'autres méthodes si on veut personnaliser
-        return array( 'form_article' => $form->createView() );
+        return array('form_article' => $form->createView() );
     }
 
     /**
@@ -69,7 +73,7 @@ class ArticleController extends Controller
      */
     public function addAction()
     {
-        return $this->editArticle();
+        return $this->editArticle(new Article());
     }
     
     /**
@@ -89,21 +93,22 @@ class ArticleController extends Controller
      * @Route("/{id}")
      * @Template()
      */
-    public function readAction(Article $article)  //utilisation du paramconverter
+    public function readAction($id)          //(Article $article) !!ParamConvereter renvoie une exception si l'article n'existe pas
     {
-        //$article = $this->getArticleRepository()->find($id);
-        
-        return array ('article' => $article);
+        return array ('article' => $this->getArticleRepository()->find($id));
     }
     
     /**
      * Modifie un article par son id
-     * @Route("/{id}/mod")
+     * @Route("/{id}/mod" , name="article_mod")
      * @Template()
      */
+    //@Route("/titre/{titre}/mod")
+    //!!! ParamConverter renvoie une exception si l'article n'est pas trouvé...
     public function modAction($id)
     {
-        return $this->editArticle($id);
+        $article = $this->getArticleRepository()->find($id);
+        return $this->editArticle($article);
     }
 
     /**
@@ -111,7 +116,7 @@ class ArticleController extends Controller
      * @Route("/{id}/del")
      * @Template()
      */
-    public function delAction($id)
+    public function delAction($id)  //sans paramconverter qui retourne une erreur si la table n'existe pas!!!
     {
         $article = $this->getArticleRepository()->find($id);
         $ok = false;
@@ -125,6 +130,12 @@ class ArticleController extends Controller
         return array('id' => $id, 'ok' => $ok);
     }
 
-           
-    
+     /**
+     * Delete un article par son id
+     * @Route("/erreur")
+     * @Template()
+     */
+    public function errAction()
+    {      
+    }    
 }

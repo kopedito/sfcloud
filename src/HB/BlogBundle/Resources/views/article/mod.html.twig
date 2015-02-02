@@ -3,7 +3,11 @@
 {% block body %}
     <h1>Mod</h1>
 
-    {{ form(form_article) }}
+    {% if form_article is defined %}
+        {{ form(form_article) }}
+    {%else%}
+        L'article n'existe pas!!!
+    {%endif%}
 
     <hr/><a href="{{path('hb_blog_article_index')}}">HOME</a><br/>
 

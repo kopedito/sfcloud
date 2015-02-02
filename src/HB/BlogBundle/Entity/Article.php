@@ -42,9 +42,20 @@ class Article
      */
     private $datecre;
     
+    /**
+     * @var \DateTime
+     * 
+     * @ORM\Column(name="datemod", type="datetime")
+     */
+    private $datemod;  
+    //=> php app/console doctrine:generate:entities HBBlogBundle:Article
+    //=> php app/console doctrine:schema:update --dump-sql
+    //=> php app/console doctrine:schema:update --force
+    
     public function __construct()
     {
         $this->datecre = new \DateTime();//date("Y-m-d H:i:s");
+        $this->datemod = new \DateTime();//date("Y-m-d H:i:s");
     }
     
     /**
@@ -124,5 +135,28 @@ class Article
     public function getDatecre()
     {
         return $this->datecre;
+    }
+
+    /**
+     * Set datemod
+     *
+     * @param \DateTime $datemod
+     * @return Article
+     */
+    public function setDatemod($datemod)
+    {
+        $this->datemod = $datemod;
+
+        return $this;
+    }
+
+    /**
+     * Get datemod
+     *
+     * @return \DateTime 
+     */
+    public function getDatemod()
+    {
+        return $this->datemod;
     }
 }
