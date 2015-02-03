@@ -10,11 +10,7 @@
     {%else%}
        erreur inconnue!!!
     {%endif%}
-    <hr>
-    <a href="/user/">Liste utilisateurs</a>
-    &nbsp;&nbsp;
-    <a href="{{path('hb_blog_article_index')}}">HOME</a>
-    <br/>
-
+    
+    {% include 'HBBlogBundle:Base:user_footer.html.twig' %}
 {% endblock %}
 

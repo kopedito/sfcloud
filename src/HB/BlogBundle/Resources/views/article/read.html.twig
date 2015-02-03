@@ -12,12 +12,17 @@
         <b>contenu</b> :<p>{{ article.contenu|nl2br}}</p><br/>
         <b>datecre</b> :{{ article.datecre|date('d/m/Y H:i:s')}}<br/>
         <b>datemod</b> :{{ article.datemod|date('d/m/Y H:i:s')}}<br/>
-        <b>auteur</b> :{{ article.auteurnom }}<br/>
+        <b>auteur</b> : 
+            {% if (article.auteur is defined) and (article.auteur != null) %}
+                <a href="{{path('hb_blog_user_read',{'id':article.auteur.id})}}">{{ article.auteurnom }}</a><br/>
+                {% else %}
+                    -<br/>
+                    {%endif%}
         <br/>
 
         <b>
-        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}/mod">modifier</a>&nbsp;
-        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}/del">supprimer</a><br/>
+        <a href="{{ path('hb_blog_article_mod',{'id':article.id}) }}">modifier</a>&nbsp;
+        <a href="{{ path('hb_blog_article_del',{'id':article.id}) }}">supprimer</a><br/>
         </b>
     {% endif %}
     <hr/><a href="/article/">HOME</a><br/>

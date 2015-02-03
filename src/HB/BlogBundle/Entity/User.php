@@ -67,9 +67,15 @@ class User
     /**
      * @var Collection
      * 
-     * @ORM\OneToMany(targetEntity="HB\BlogBundle\Entity\Article", mappedBy="auteur")
+     * @ORM\OneToMany(targetEntity="HB\BlogBundle\Entity\Article", mappedBy="auteur", cascade={"detach"})
      */
     private $articles;
+    //!! Doctrine crée une contrainte d'intégrité en DB
+    // si un del user implique un  "auteur=null" sur article
+    //il faut définir une 'cascade { 'detach' }' dans user sur article
+    // qui se répercute par une contrainte "SET NULL" sur article.auteur lors d'un DEL
+    //
+    //!!! sur article.auteur_nom existe, il faut le mettre à jours à la main avant le user.delete
 
     
     /**
@@ -265,5 +271,14 @@ class User
     public function getArticles()
     {
         return $this->articles;
+    }
+    
+    public function detachArticles()
+    {
+        foreach ($this->articles as $article)
+        {
+            $this->removeArticle($article);
+            $article->setAuteur(null);
+        }
     }
 }

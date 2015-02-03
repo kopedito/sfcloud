@@ -14,17 +14,19 @@
         <b>admin</b> :{{ user.isadmin }}<br/>
         <b>datecre</b> :{{ user.datecre|date('d/m/Y H:i:s')}}<br/>
         <b>picture</b> :{{ user.picture }}<br/>
+        <b>num articles</b> : {{ user.articles|length }}
+                    {% if (user.articles|length >0) %}
+                        <a href="{{path('hb_blog_article_user_index',{'uid':user.id})}}">voir les articles de cet utilisateur</a>
+                    {% endif %}
+                    <br/>
         <br/>
 
         <b>
-        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}/mod">modifier</a>&nbsp;
-        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}/del">supprimer</a><br/>
+        <a href="{{ path('hb_blog_user_mod',{'id':user.id}) }}">modifier</a>&nbsp;
+        <a href="{{ path('hb_blog_user_del',{'id':user.id}) }}">supprimer</a><br/>
         </b>
     {% endif %}
-    <hr>
-    <a href="/user/">Liste utilisateurs</a>
-    &nbsp;&nbsp;
-    <a href="{{path('hb_blog_article_index')}}">HOME</a>
-    <br/>
+    
+    {% include 'HBBlogBundle:Base:user_footer.html.twig' %}
 {% endblock %}
 

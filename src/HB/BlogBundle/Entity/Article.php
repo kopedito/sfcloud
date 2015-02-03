@@ -53,7 +53,8 @@ class Article
     //=> php app/console doctrine:schema:update --force
     
     /**
-     * @ORM\ManyToOne(targetEntity="HB\BlogBundle\Entity\User", inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity="HB\BlogBundle\Entity\User", inversedBy="articles", cascade={"detach"})
+     * @ORM\JoinColumn(name="auteur_id", referencedColumnName="id",  onDelete="SET NULL")
      */
     private $auteur;
     //relation inversée:
@@ -215,6 +216,10 @@ class Article
         {
             $this->auteur_nom = $auteur->getUsername();
             $auteur->addArticle($this);
+        }
+        else
+        {
+            $this->auteur_nom = '';
         }
         return $this;
     }

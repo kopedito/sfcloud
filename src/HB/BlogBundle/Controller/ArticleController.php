@@ -3,6 +3,7 @@
 namespace HB\BlogBundle\Controller;
 
 use HB\BlogBundle\Entity\Article;
+use HB\BlogBundle\Entity\UserRepository;
 use HB\BlogBundle\Form\ArticleType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -68,7 +69,7 @@ class ArticleController extends Controller
 
     /**
      * Ajoute un article
-     * @Route("/add")
+     * @Route("/add" , name="hb_blog_article_add")
      * @Template()
      */
     public function addAction()
@@ -79,18 +80,29 @@ class ArticleController extends Controller
     /**
      * Liste tous les articles
      * 
-     * @Route("/")
+     * @Route("/" , name="hb_blog_article_index")
+     * @Route("/user/{uid}" , name="hb_blog_article_user_index")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($uid = 0)
     {
-        $articles = $this->getArticleRepository()->findAll();
+        if ($uid == 0)
+        {
+            $articles = $this->getArticleRepository()->findAll();
+        }
+        else
+        {
+            $user = $this->getDoctrine()->getRepository("HBBlogBundle:User")->find($uid);
+            $articles = $user->getArticles();
+            //plus rapide:
+            //$articles = $this->getArticleRepository()->findBy(array('auteur'=>$uid));
+        }
         return array('articles'=> $articles , 'user' => null);
     }
 
     /**
      * Affiche un article par son id
-     * @Route("/{id}")
+     * @Route("/read/{id}" , name="hb_blog_article_read")
      * @Template()
      */
     public function readAction($id)          //(Article $article) !!ParamConvereter renvoie une exception si l'article n'existe pas
@@ -100,7 +112,7 @@ class ArticleController extends Controller
     
     /**
      * Modifie un article par son id
-     * @Route("/{id}/mod" , name="article_mod")
+     * @Route("/mod/{id}" , name="hb_blog_article_mod")
      * @Template()
      */
     //@Route("/titre/{titre}/mod")
@@ -113,7 +125,7 @@ class ArticleController extends Controller
 
     /**
      * Delete un article par son id
-     * @Route("/{id}/del")
+     * @Route("/del/{id}" , name="hb_blog_article_del")
      * @Template()
      */
     public function delAction($id)  //sans paramconverter qui retourne une erreur si la table n'existe pas!!!
@@ -129,13 +141,4 @@ class ArticleController extends Controller
         
         return array('id' => $id, 'ok' => $ok);
     }
-
-     /**
-     * Delete un article par son id
-     * @Route("/erreur")
-     * @Template()
-     */
-    public function errAction()
-    {      
-    }    
 }

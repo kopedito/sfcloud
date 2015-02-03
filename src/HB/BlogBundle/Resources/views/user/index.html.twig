@@ -7,8 +7,8 @@
     <ul>
     {% for user in users %}
         <li>#{{loop.index}} : </b>
-            <a href="{{ path('hb_blog_user_read' , {'id':user.id})}}">{{user.username}}</a></b> 
-            (id:{{ user.id }}) (login: {{ user.login }}</li>
+            <a href="{{ path('hb_blog_user_read' , {'id':user.id})}}">{{user.username}}</a></b>
+        </li>
     {% else %}
         Pas d'utilisateur à afficher
     {% endfor %}

@@ -103,6 +103,7 @@ class UserController extends Controller
     public function delAction($id)  //sans paramconverter qui retourne une erreur si la table n'existe pas!!!
     {
         $user = $this->getUserRepository()->find($id);
+        $user->detachArticles();
         $ok = false;
         if ($user != null) {
             $em = $this->getDoctrine()->getManager();
