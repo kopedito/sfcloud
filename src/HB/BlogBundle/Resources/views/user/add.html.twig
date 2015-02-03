@@ -1,0 +1,20 @@
+{% extends 'HBBlogBundle:Base:user.html.twig' %}
+
+{% block title %}{{ parent() }} - Add{%endblock%}
+
+{% block body %}
+    <h1>Add User</h1>
+
+    {% if form_user is defined %}
+        {{ form(form_user) }}
+    {%else%}
+       erreur inconnue!!!
+    {%endif%}
+    <hr>
+    <a href="/user/">Liste utilisateurs</a>
+    &nbsp;&nbsp;
+    <a href="{{path('hb_blog_article_index')}}">HOME</a>
+    <br/>
+
+{% endblock %}
+

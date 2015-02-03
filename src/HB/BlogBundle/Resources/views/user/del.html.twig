@@ -1,0 +1,18 @@
+{% extends 'HBBlogBundle:Base:user.html.twig' %}
+
+{% block body %}
+    <h1>Del User</h1>
+    {% if ok==false %}
+        DEL NOK: le user {{id}} n'existe pas
+    {% else %}
+        DEL OK: le user {{id}} a été supprimé
+    {% endif %}
+
+    <hr>
+    <a href="/user/">Liste utilisateurs</a>
+    &nbsp;&nbsp;
+    <a href="{{path('hb_blog_article_index')}}">HOME</a>
+    <br/>
+
+{% endblock %}
+

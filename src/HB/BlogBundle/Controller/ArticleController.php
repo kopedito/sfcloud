@@ -85,7 +85,7 @@ class ArticleController extends Controller
     public function indexAction()
     {
         $articles = $this->getArticleRepository()->findAll();
-        return array('articles'=> $articles);
+        return array('articles'=> $articles , 'user' => null);
     }
 
     /**

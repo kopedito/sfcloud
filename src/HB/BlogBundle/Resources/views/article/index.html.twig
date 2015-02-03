@@ -3,7 +3,14 @@
 {% block title %}{{ parent() }} - Index{%endblock%}
 
 {% block body %}
-    <h1>Index</h1>
+    <h1>Index Article</h1>
+    {% if (user is defined) and (user != null) %}
+        Bonjour {{user.username}}. <a href="{{path('hb_blog_user_login')}}">changer</a><br/>
+    {%else%}
+        <a href="{{path('hb_blog_user_login')}}">s'identifier</a><br/>
+    {%endif%}
+           
+        
     <ul>
     {% for article in articles %}
         <li>#{{loop.index}} : </b>
@@ -14,6 +21,14 @@
     {% endfor %}
     </ul>
     <a href="{{path('hb_blog_article_add')}}">ajouter</a><br/>
+
+    {% if (user is defined) and (user != null) %}
+        {% if user.isadmin %}
+            <a href="{{path('hb_blog_user_index')}}">user admin</a><br/>
+        {%endif%}
+    {%else%}
+        <a href="{{path('hb_blog_user_index')}}">backdoor user admin</a><br/>
+    {%endif%}
 
     TODO: paginer (prev/next)<br/>
 {% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'HBBlogBundle:Base:user.html.twig' %}
+
+{% block title %}{{ parent() }} - Read{%endblock%}
+
+{% block body %}
+    <h1>Read</h1>
+    {% if (user==null) %}
+        Ce user n'existe pas
+    {% else %}
+        <b>id</b> : {{ user.id }}<br/>
+        <b>username</b> : {{ user.username}}<br/>
+        <b>login</b> :{{ user.login}}<br/>
+        <b>password</b> :{{ user.password }}<br/>
+        <b>admin</b> :{{ user.isadmin }}<br/>
+        <b>datecre</b> :{{ user.datecre|date('d/m/Y H:i:s')}}<br/>
+        <b>picture</b> :{{ user.picture }}<br/>
+        <br/>
+
+        <b>
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}/mod">modifier</a>&nbsp;
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}/del">supprimer</a><br/>
+        </b>
+    {% endif %}
+    <hr>
+    <a href="/user/">Liste utilisateurs</a>
+    &nbsp;&nbsp;
+    <a href="{{path('hb_blog_article_index')}}">HOME</a>
+    <br/>
+{% endblock %}
+

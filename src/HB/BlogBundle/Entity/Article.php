@@ -53,9 +53,14 @@ class Article
     //=> php app/console doctrine:schema:update --force
     
     /**
-     * @ORM\ManyToOne(targetEntity="HB\BlogBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="HB\BlogBundle\Entity\User", inversedBy="articles")
      */
     private $auteur;
+    //relation inversée:
+    // auteur (inversed) Mto1 Article->User  || articles (mapped) 1toM User->Article
+    // => php app/console doctrine:schema:validate
+    // aucun impact en DB, seule les clés étrangères (Mto1) existent en DB
+    // les clés mapped (1toM) n'existent qu'en doctrine.
     
     /**
      * @var string
@@ -68,7 +73,7 @@ class Article
     public function __construct()
     {
         $this->datecre = new \DateTime();//date("Y-m-d H:i:s");
-        $this->datemod = new \DateTime();//date("Y-m-d H:i:s");
+        $this->datemod = new \DateTime();
     }
     
     /**
@@ -204,8 +209,13 @@ class Article
      */
     public function setAuteur(\HB\BlogBundle\Entity\User $auteur = null)
     {
+        
         $this->auteur = $auteur;
-
+        if ($auteur != null)
+        {
+            $this->auteur_nom = $auteur->getUsername();
+            $auteur->addArticle($this);
+        }
         return $this;
     }
 

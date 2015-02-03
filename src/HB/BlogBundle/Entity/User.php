@@ -63,7 +63,25 @@ class User
      */
     private $picture;
 
+    
+    /**
+     * @var Collection
+     * 
+     * @ORM\OneToMany(targetEntity="HB\BlogBundle\Entity\Article", mappedBy="auteur")
+     */
+    private $articles;
 
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->datecre = new \DateTime();
+        $this->isadmin = false;
+    }
+    
     /**
      * Get id
      *
@@ -210,5 +228,42 @@ class User
     public function getPicture()
     {
         return $this->picture;
+    }
+    
+
+    /**
+     * Add articles
+     *
+     * @param \HB\BlogBundle\Entity\Article $article
+     * @return User
+     */
+    public function addArticle(\HB\BlogBundle\Entity\Article $article)
+    {
+        
+        //on aurait pu faire un $article->setAuteur($this)
+        //il faut le faire d'un coté ou de l'autre, mais pas les deux
+        $this->articles[] = $article;
+
+        return $this;
+    }
+
+    /**
+     * Remove articles
+     *
+     * @param \HB\BlogBundle\Entity\Article $articles
+     */
+    public function removeArticle(\HB\BlogBundle\Entity\Article $articles)
+    {
+        $this->articles->removeElement($articles);
+    }
+
+    /**
+     * Get articles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getArticles()
+    {
+        return $this->articles;
     }
 }
