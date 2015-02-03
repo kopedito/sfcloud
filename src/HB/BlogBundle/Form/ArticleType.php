@@ -18,6 +18,10 @@ class ArticleType extends AbstractType
             ->add('titre')
             ->add('contenu')
             //->add('datecre')
+            ->add('auteur', 'entity' ,array(
+                                            'class' => 'HBBlogBundle:User',
+                                            //'query_builder' => function(\HB\BlogBundle\Entity\UserRepository $r) { return $r->getSelectList(); },
+                                            'property' => 'username'))
             ->add('valider','submit')
         ;
     }

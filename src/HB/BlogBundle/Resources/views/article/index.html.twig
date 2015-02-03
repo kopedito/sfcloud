@@ -13,9 +13,15 @@
         
     <ul>
     {% for article in articles %}
-        <li>#{{loop.index}} : </b>
+        <li>#{{loop.index}} : 
             <!-- <a href="{{article.id}}">{{article.titre}}</a> (id:{{ article.id }})</b></li> -->
-            <a href="{{ path('hb_blog_article_read' , {'id':article.id})}}">{{article.titre}}</a> (id:{{ article.id }})</b></li>
+            <b><a href="{{ path('hb_blog_article_read' , {'id':article.id})}}">{{article.titre}}</a></b> 
+            (id:{{ article.id }})
+            {% if (article.auteur is defined) and (article.auteur != null) %}
+            par {{ article.auteur.username }}
+            {%endif%}
+                    
+            </li>
     {% else %}
         Pas d'élément à afficher
     {% endfor %}

@@ -17,7 +17,10 @@ class UserType extends AbstractType
         $builder
             ->add('username')
             ->add('login')
-            ->add('password')
+            ->add('password', 'repeated' , array('type'=>'password',
+                                                'first_options' => array('label' => 'mdp'),
+                                                'second_options' => array('label' => 'mdp validation')
+                ))
             //->add('datecre')
             ->add('isadmin','checkbox', array('required' => false))
             ->add('picture')

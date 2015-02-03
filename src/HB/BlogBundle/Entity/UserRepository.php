@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+  public function getSelectList()
+  {
+    $qb = $this->createQueryBuilder('u')
+                ->orderBy('u.datecre', 'DESC');
+    // Et on retourne simplement le QueryBuilder, et non la Query, attention
+    return $qb;
+  }
 }
