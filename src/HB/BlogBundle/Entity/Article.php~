@@ -52,6 +52,20 @@ class Article
     //=> php app/console doctrine:schema:update --dump-sql
     //=> php app/console doctrine:schema:update --force
     
+    /**
+     * @ORM\ManyToOne(targetEntity="HB\BlogBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $auteur;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="auteur_nom", type="string", length=255)
+     */
+    private $auteur_nom;
+
+    
     public function __construct()
     {
         $this->datecre = new \DateTime();//date("Y-m-d H:i:s");
@@ -135,5 +149,28 @@ class Article
     public function getDatecre()
     {
         return $this->datecre;
+    }
+
+    /**
+     * Set datemod
+     *
+     * @param \DateTime $datemod
+     * @return Article
+     */
+    public function setDatemod($datemod)
+    {
+        $this->datemod = $datemod;
+
+        return $this;
+    }
+
+    /**
+     * Get datemod
+     *
+     * @return \DateTime 
+     */
+    public function getDatemod()
+    {
+        return $this->datemod;
     }
 }
