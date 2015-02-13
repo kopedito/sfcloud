@@ -9,13 +9,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+//use BeSimple\SoapBundle\ServiceDefinition\Annotation as Soap;
+//use Symfony\Component\DependencyInjection\ContainerAware;
+
 /**
  * Controleur de l'entité article 
  * @Route("/article")
  */
+
 class ArticleController extends Controller
-{
-       
+{    
     private function getArticleRepository()
     {
         return $this->getDoctrine()->getRepository("HBBlogBundle:Article");
