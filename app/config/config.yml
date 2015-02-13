@@ -82,3 +82,8 @@ be_simple_soap:
             binding:       rpc-literal
             resource:      "@HBBlogBundle/Controller/DemoController.php"
             resource_type: annotation
+        BlogApi:
+            namespace:     http://sfcloud.local/ws/BlogApi/1.0/
+            binding:       rpc-literal
+            resource:      "@HBBlogBundle/Controller/wsArticleController.php"
+            resource_type: annotation

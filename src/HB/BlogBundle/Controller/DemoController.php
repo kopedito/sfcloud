@@ -3,6 +3,7 @@ namespace HB\BlogBundle\Controller;
 
 use BeSimple\SoapBundle\ServiceDefinition\Annotation as Soap;
 use Symfony\Component\DependencyInjection\ContainerAware;
+use HB\BlogBundle\Entity\Article;
 
 class DemoController extends ContainerAware
 {

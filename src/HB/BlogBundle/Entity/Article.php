@@ -3,14 +3,18 @@
 namespace HB\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use BeSimple\SoapBundle\ServiceDefinition\Annotation as Soap;
+
 
 /**
  * Article
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="HB\BlogBundle\Entity\ArticleRepository")
+ * 
+ * @Soap\Alias("Article")
  */
-class Article
+ class Article
 {
     /**
      * @var integer
@@ -18,6 +22,7 @@ class Article
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Soap\ComplexType("int", nillable=true)
      */
     private $id;
 
@@ -25,6 +30,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255)
+     * @Soap\ComplexType("string")
      */
     private $titre;
 
@@ -32,6 +38,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="contenu", type="text", nullable=true)
+     * @Soap\ComplexType("string")
      */
     private $contenu;
 
@@ -39,6 +46,7 @@ class Article
      * @var \DateTime
      * 
      * @ORM\Column(name="datecre", type="datetime")
+     * @Soap\ComplexType("dateTime")
      */
     private $datecre;
     
@@ -46,6 +54,7 @@ class Article
      * @var \DateTime
      * 
      * @ORM\Column(name="datemod", type="datetime")
+     * @Soap\ComplexType("dateTime")
      */
     private $datemod;  
     //=> php app/console doctrine:generate:entities HBBlogBundle:Article
@@ -67,6 +76,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="auteur_nom", type="string", length=255)
+     * @Soap\ComplexType("string")
      */
     private $auteur_nom;
 
