@@ -38,7 +38,7 @@ use BeSimple\SoapBundle\ServiceDefinition\Annotation as Soap;
      * @var string
      *
      * @ORM\Column(name="contenu", type="text", nullable=true)
-     * @Soap\ComplexType("string")
+     * @Soap\ComplexType("string", nillable=true)
      */
     private $contenu;
 
@@ -46,7 +46,7 @@ use BeSimple\SoapBundle\ServiceDefinition\Annotation as Soap;
      * @var \DateTime
      * 
      * @ORM\Column(name="datecre", type="datetime")
-     * @Soap\ComplexType("dateTime")
+     * @Soap\ComplexType("dateTime", nillable=true)
      */
     private $datecre;
     
@@ -54,7 +54,7 @@ use BeSimple\SoapBundle\ServiceDefinition\Annotation as Soap;
      * @var \DateTime
      * 
      * @ORM\Column(name="datemod", type="datetime")
-     * @Soap\ComplexType("dateTime")
+     * @Soap\ComplexType("dateTime", nillable=true)
      */
     private $datemod;  
     //=> php app/console doctrine:generate:entities HBBlogBundle:Article
@@ -76,7 +76,7 @@ use BeSimple\SoapBundle\ServiceDefinition\Annotation as Soap;
      * @var string
      *
      * @ORM\Column(name="auteur_nom", type="string", length=255)
-     * @Soap\ComplexType("string")
+     * @Soap\ComplexType("string", nillable=true)
      */
     private $auteur_nom;
 

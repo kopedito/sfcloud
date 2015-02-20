@@ -24,60 +24,52 @@ class wsArticleController extends Controller
         return $this->getDoctrine()->getRepository("HBBlogBundle:User");
     }
 
-    private function editArticle($article) 
+    private function editArticle(Article $article) 
     {
-          if ($article == null) //mod d'un article qui n'existe pas
-            {
-                //erreur : rediriger vers une page d'erreur avec un msg i.e. err.html.twig
-                //return $this->redirect($this->generateUrl('hb_blog_article_index'));
-                //ou tester l'existence du formulaire dans le twig...
-              return array();
-            }
-            else if ($article->getId()>0)   //mod d'un article connu
-            {
-                $article->setDatemod(new \DateTime());
-            }
+        if ($article == null) //mod d'un article qui n'existe pas
+        {
+            throw new \SoapFault("Sender", "Invalid data");
+            return $article;
+        }
         
-/*
-        // On vérifie qu'elle est de type POST pour voir si un formulaire a été soumis
-        if ($request->getMethod() == 'POST') {
-            // On fait le lien Requête <-> Formulaire
-            // À partir de maintenant, la variable $article contient les valeurs entrées dans 
-            // le formulaire par le visiteur
-            $form->bind($request);
-            // On vérifie que les valeurs entrées sont correctes
-            // (Nous verrons la validation des objets en détail dans le prochain chapitre)
-            if ($form->isValid()) {
-                // On l'enregistre notre objet $article dans la base de données
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($article);
-                $em->flush();
-
-                // On redirige vers la page de visualisation de l'article nouvellement créé
-                //la liste des routes s'obtient avec la commande:
-                // php app/console route:debug
-                return $this->redirect($this->generateUrl('hb_blog_article_read', array('id' => $article->getId())));
-            }
-        } 
-*/
+        $em = $this->getDoctrine()->getManager();
+        $article->setDatemod(new \DateTime());
+        if ($article->getId()<=0)       //ADD
+        {
+            $article->setDatecre(new \DateTime());
+        }
+        else                            //MOD
+        {
+            $oldArticle = $em->find("HBBlogBundle:Article", $article->getId());
+            $article->setDateCre($oldArticle->getDateCre());            
+        }
+        
+        // on utilise merge et non persist puisque notre objet Article ne vient
+        // pas de l'entitymanager mais est instancié à partir de SoapBundle
+        $em->merge($article);
+        $em->flush();
+        return $article;
     }
 
     /**
      * Ajoute un article
+     * @Soap\Method("addArticle")
+     * @Soap\Param("article", phpType = "HB\BlogBundle\Entity\Article")
+     * @Soap\Result(phpType = "HB\BlogBundle\Entity\Article")
      */
-    public function addAction()
+    public function addAction($article)
     {
-        return $this->editArticle(new Article());
+        return $this->editArticle($article);
     }
     
     /**
      * Liste tous les articles
      * 
-     * @Soap\Method("index")
-     * @Soap\Param("uid", phpType = "int")
-     * @Soap\Result(phpType = "HB\BlogBundle\Entity\Article")
+     * @Soap\Method("listArticle")
+     * @Soap\Param("titre", phpType = "int")
+     * @Soap\Result(phpType = "HB\BlogBundle\Entity\Article[]")
     */
-    public function indexAction($uid = 0)
+    public function listAction($uid = 0)
     {
         if ($uid == 0)
         {
@@ -85,10 +77,7 @@ class wsArticleController extends Controller
         }
         else
         {
-            $user = $this->getUserRepository()->find($uid);
-            $articles = $user->getArticles();
-            //plus rapide:
-            //$articles = $this->getArticleRepository()->findBy(array('auteur'=>$uid));
+            $articles = $this->getArticleRepository()->findBy(array('auteur'=>$uid));
         }
         return $articles;
     }
@@ -105,18 +94,23 @@ class wsArticleController extends Controller
     }
     
     /**
-     * Modifie un article par son id
-     */
-    public function modAction($id)
+     * Modifie un article
+     * @Soap\Method("modArticle")
+     * @Soap\Param("article", phpType = "HB\BlogBundle\Entity\Article")
+     * @Soap\Result(phpType = "HB\BlogBundle\Entity\Article")    */
+    public function modAction($article)
     {
-        $article = $this->getArticleRepository()->find($id);
+//        $article = $this->getArticleRepository()->find($article->id);
         return $this->editArticle($article);
     }
 
     /**
      * Delete un article par son id
+     * @Soap\Method("delArticle")
+     * @Soap\Param("id", phpType = "int")
+     * @Soap\Result(phpType = "boolean")     
      */
-    public function delAction($id)  //sans paramconverter qui retourne une erreur si la table n'existe pas!!!
+    public function delAction($id)
     {
         $article = $this->getArticleRepository()->find($id);
         $ok = false;
@@ -127,6 +121,6 @@ class wsArticleController extends Controller
             $ok = true;
         }
         
-        return "ok";
+        return $ok;
     }
 }
